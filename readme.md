@@ -1,1 +1,1 @@
-Hi bye
+An experimental repository to interact with smart lighting.
