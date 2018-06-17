@@ -1,38 +1,48 @@
 import requests
+import sys
 from home_vars import hub_ip, user
 
 
-kay = 'http://' + hub_ip + '/api/' + user + '/lights/2/state'
 on = '{"on":true, "bri":254}'
 off = '{"on":false, "transitiontime":50, "bri":254}'
 
 
-def light_off():
-    r = requests.put(kay, off)
+def light_handle(light):
+    handle = 'http://' + hub_ip + '/api/' + user + '/lights/' + light + '/state'
+    return handle
 
 
-def light_on():
-    r = requests.put(kay, on)
+def light_off(light):
+    r = requests.put(light_handle(light), off)
+    print('Dim to off.')
 
 
-def dim_level(bri):
-    bri = str(bri)
-    state = '{"on":true, "bri":' + bri + '}'
-    r = requests.put(kay, state)
-    print('Dimmed to ' + bri + '%')
+def light_on(light):
+    r = requests.put(light_handle(light), on)
+    print('Light on.')
+
+
+def dim_level(light,dim):
+    bri = 254 * dim / 100
+    state = '{"on":true, "bri":' + str(dim) + '}'
+    r = requests.put(light_handle(light), state)
+    print('Dimmed ' + light + ' to ' + str(dim) + '%')
 
 
 while True:
     light = input('Select light (1-3) or quit (q): ')
-    if light 1
-    dim = input('Enter dimming level: ')
-    dim = int(dim)
-    if dim == 0:
-        light_off()
+    if light == 'q':
+        sys.exit()
 
-    elif 0 < dim <= 100:
-        bri = 254 * dim / 100
-        dim_level(int(bri))
+    elif 1 <= int(light) <= 3:
+        dim = input('Enter dimming level: ')
+        dim = int(dim)
 
-    else:
-        print('Enter a value between 0 and 100.')
+        if dim == 0:
+            light_off(light)
+
+        elif 0 < dim <= 100:
+            dim_level(light,dim)
+
+        else:
+            print('Enter a value between 0 and 100.')
