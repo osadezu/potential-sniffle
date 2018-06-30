@@ -24,17 +24,18 @@ def light_on(light):
 
 def dim_level(light,dim):
     bri = 254 * dim / 100
-    state = '{"on":true, "bri":' + str(dim) + '}'
+    state = '{"on":true, "bri":' + str(int(bri)) + '}'
     r = requests.put(light_handle(light), state)
+    print(state)
     print('Dimmed ' + light + ' to ' + str(dim) + '%')
 
 
 while True:
-    light = input('Select light (1-3) or quit (q): ')
+    light = input('Select light (1-4) or quit (q): ')
     if light == 'q':
         sys.exit()
 
-    elif 1 <= int(light) <= 3:
+    elif 1 <= int(light) <= 4:
         dim = input('Enter dimming level: ')
         dim = int(dim)
 
