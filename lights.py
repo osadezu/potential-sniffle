@@ -1,6 +1,7 @@
 import requests
 import sys
 from home_vars import hub_ip, user
+from warmdim import *
 
 
 on = '{"on":true, "bri":254}'
@@ -34,6 +35,12 @@ while True:
     light = input('Select light (1-4) or quit (q): ')
     if light == 'q':
         sys.exit()
+
+    if light == 'm':
+        cct = int(input('Enter CCT: '))
+        mirek = cct2mirek(cct)
+        print (str(cct) + 'K = ' + str(mirek) + ' mirek')
+
 
     elif 1 <= int(light) <= 4:
         dim = input('Enter dimming level: ')
